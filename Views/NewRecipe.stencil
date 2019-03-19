@@ -7,7 +7,7 @@
   <body>
     <button onclick="document.location.href='/'">Accueil</button>
     <button onclick="document.location.href='/orders'">Commandes</button>
-    <form action="/newRecipe" method="post">
+    <form action="" method="POST">
       <input type="text" name="nameRecipe" placeholder="Nom Recette" /> <br /><br />
 
       <label>Ingrédients (séparez les ingrédients par une virgule)</label><br />

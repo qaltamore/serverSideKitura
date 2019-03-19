@@ -7,11 +7,15 @@
   <body>
     <button onclick="document.location.href='/newRecipe'">Nouvelle Recette !</button>
     <button onclick="document.location.href='/'">Accueil</button>
-    <ul>
-      {% for order in orders %}
-        <li>
-        </li>
-      {% endfor %}
-    </ul>
+    <form action="" method="POST">
+      <ul>
+        {% for order in orders %}
+          <li>
+            <label>{{ order.name }} <input type="checkbox" name="pizze" value={{ order.numero }} /></label> 
+          </li>
+        {% endfor %}
+      </ul>
+      <input type="submit" value="Livrée" />
+    </form>
   </body>
 </html>
