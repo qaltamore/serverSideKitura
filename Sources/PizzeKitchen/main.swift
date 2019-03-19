@@ -1,26 +1,11 @@
-import Foundation
 import Kitura
 import HeliumLogger
 import KituraStencil
-import Application
 
 HeliumLogger.use()
 
-struct HelloResponse : Codable {
-    let result : String //Contient Hello + prénom + nom
-}
-
 let router = Router()
 
-/*var pizzeList = [{
-    name: "Calzone",
-    ingredients: [
-        "oeuf",
-        "jambon",
-        "mozarella",
-        "sauce tomate"
-    ]
-    }]*/
 struct Pizza: Codable {
     var name: String
     var ingredients: [String]
@@ -28,7 +13,7 @@ struct Pizza: Codable {
 
 var listCalzoneIngredients = ["oeuf", "jambon", "mozarella", "sauce tomate"]
 var listQuatreFromagesIngredients = ["gorgonzola", "mozarella", "chèvre", "parmesan", "sauce tomate"]
-let pizzeList = [
+var pizzeList = [
     Pizza(name: "Calzone", ingredients: listCalzoneIngredients),
     Pizza(name: "4 Frômages", ingredients: listQuatreFromagesIngredients)
 ]
@@ -42,21 +27,6 @@ router.add(templateEngine: StencilTemplateEngine())
  
  if let ingredient = request.parameters["ingredient"]
  
- 
- router.post("/api/hello") { request, response, next in
-    print(request.body ?? "Body is nil")
-    //il n'y a potentiellement pas de body dans une request
-    if let body = request.body?.asJSON {
-        print("Oui")
-        if let p = body["prenom"], let n = body["nom"] {
-            print("Test")
-            response.send(HelloResponse(result: "Hello \(p) \(n)"))
-        }
-    } else {
-        response.status(.notFound)
-    }
-    
-    next()
 }*/
 
 router.get("/") { request, response, next in
@@ -65,13 +35,38 @@ router.get("/") { request, response, next in
 }
 
 router.get("/newRecipe") { request, response, next in
-    let n : String
-    if let ingredient = request.parameters["ingredient"] {
-        n = ingredient
+    let tiens = ""
+    try response.render("NewRecipe.stencil", context: ["useless": tiens])
+    next()
+}
+
+router.post("/newRecipe") { request, response, next in
+    print(request.body ?? "Body is nil")
+    
+    if let body = request.body?.asURLEncoded {
+        if let nameRecipe: String = body["nameRecipe"] as! String, let ingredientsRecipe: String = body["ingredientsRecipe"] as! String {
+            print("Pizza : ", nameRecipe)
+            print("Ingrédients : ", ingredientsRecipe)
+            var ingredientsRecipeTab = ingredientsRecipe.components(separatedBy: ",")
+            var ingredientsRecipeTabTrimmed: [String] = []
+            for item in ingredientsRecipeTab {
+                ingredientsRecipeTabTrimmed.append(item.trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            
+            var pizza = Pizza(name: nameRecipe, ingredients: ingredientsRecipeTabTrimmed)
+            pizzeList.append(pizza)
+            try response.render("Home.stencil", context: ["pizzeList": pizzeList])
+        }
     } else {
-        n = ""
+        response.status(.notFound)
     }
-    try response.render("NewRecipe.stencil")
+    
+    next()
+}
+
+router.get("/orders") { request, response, next in
+    let orders = [String]()
+    try response.render("Orders.stencil", context: ["orders": orders])
     next()
 }
 

@@ -6,16 +6,10 @@
   </head>
   <body>
     <button onclick="document.location.href='/newRecipe'">Nouvelle Recette !</button>
-    <button onclick="document.location.href='/orders'">Commandes</button>
+    <button onclick="document.location.href='/'">Accueil</button>
     <ul>
-      {% for pizza in pizzeList %}
+      {% for order in orders %}
         <li>
-          Nom : {{ pizza.name }}
-          <ul>Ingrédients :
-            {% for ingredient in pizza.ingredients %}
-              <li>/{{ ingredient }}/</li>
-            {% endfor %}
-          </ul>
         </li>
       {% endfor %}
     </ul>
