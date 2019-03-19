@@ -1,0 +1,4 @@
+module memplugin {
+    umbrella "/Users/FulmiNight/Documents/ESTIAM/PizzeKitchen/.build/checkouts/omr-agentcore-5963242758997663158/src/memplugin/include"
+    export *
+}

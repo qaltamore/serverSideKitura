@@ -1,0 +1,9 @@
+---
+applications:
+- instances: 1
+  timeout: 180
+  name: PizzeKitchen
+  buildpack: swift_buildpack
+  command: "'PizzeKitchen'"
+  memory: 128M
+  random-route: true
