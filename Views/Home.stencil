@@ -1,0 +1,23 @@
+<!doctype html>
+  <head>
+    <meta charset="utf8" />
+    <title>La Tour de Pizze</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <button onclick="document.location.href='./newRecipe'">Nouvelle Recette !</button>
+    <button onclick="document.location.href='./orders'">Commandes</button>
+    <ul>
+      {% for pizza in pizzeList %}
+        <li>
+          Nom : {{ pizza.name }}
+          <ul>Ingrédients :
+            {% for ingredient in pizza.ingredients %}
+              <li>{{ ingredient }}</li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
